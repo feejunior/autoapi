@@ -14,7 +14,6 @@ def test_healthcheck_all_modules_ok():
         assert status.lower() == "ok", f"Módulo {module} não está saudável (status: {status})"
 
 def test_healthcheck_some_module_nok():
-    # Exemplo opcional: testa um módulo específico, que pode estar NOK
     payload = {"modules": ["drone"]}
     response = requests.post(BASE_URL, json=payload, headers=HEADERS, timeout=10)
     assert response.status_code in (200, 504)
@@ -24,7 +23,6 @@ def test_healthcheck_some_module_nok():
     assert data["drone"].lower() in ("ok", "nok")
 
 def test_healthcheck_timeout():
-    # Simula um módulo não saudável para retornar 504
-    payload = {"modules": ["drone"]}  # supomos que 'drone' pode falhar
+    payload = {"modules": ["drone"]}
     response = requests.post(BASE_URL, json=payload, headers=HEADERS, timeout=5)
     assert response.status_code in (200, 504)
